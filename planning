@@ -1,0 +1,60 @@
+basics of a cryptocurrency
+
+wallet
+	holds keys
+	makes transactions
+	recieves transactions
+
+miner
+	takes transactions
+	creates blocks
+node
+	holds users
+	holds miners
+	holds other nodes
+	keeps chain current
+	ensures transactions made by users are valid
+	holds tx pool
+
+
+block design
+(width, 256b)
+
+________________________
+| 	  last hash	|
+| tx0 amount		|
+| tx0 recieving		|
+| tx0 sending		|
+| tx0 sig		|
+| tx1 amount		|
+...
+| tx32766		|
+| size			|
+| miner wallet		|
+|	current hash	|
+
+
+wallet options
+
+	-s [AMOUNT] [DESTINATION ADDRESS] sends n pi to address
+	-r [PRIVATE KEY] logs pk with the wallet
+	-n [NODE IP] sets preferred node
+	-b lists balances
+	-l lists addresses
+
+transaction structure
+	message included must be < 256 bits
+	demo: "S2.456TX0.033"
+	to send use S####.#
+	use the prefix TX to attach your miner fee to it
+
+how nodes work
+	transactions
+		recieves transactions from wallets
+			packet recieved with structure {"!", [TX], [RECIEVING @], [SENDING @], [SIG]} 
+		gives transactions to miners
+			based off highest miners fee * amount of time waiting
+			packet structure as such {"N", [TX], [RECIEVING @], [SENDING @], [SIG], [REWARD], [EPOCH RECIEVED], [TIMES BROADCAST]}
+		trades transactions with other nodes
+			keeps track of how many times its been broadcast
+		deletes transactions as mined
